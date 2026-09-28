@@ -116,10 +116,10 @@ def play_game():
         print("\nOavgjort!")
 
 
-game = input("vilket spel fill du spela "
-"[1] KORT MOT KORT"
-"[2] eller HÖGT ELLER LÅGT" \
-": ")
+game = input("vilket spel fill du spela\n"
+"\n[1] KORT MOT KORT"
+"\n[2] eller HÖGT ELLER LÅGT" \
+"\n: ")
 
 if game == 1:
 
