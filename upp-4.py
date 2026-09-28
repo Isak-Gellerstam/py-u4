@@ -25,7 +25,7 @@ class Deck:
 
     def deal(self, num_cards):
         if num_cards > len(self.cards):
-            raise ValueError("Not enough cards left to deal")
+            raise ValueError("inte tillräckligt många kort")
 
         dealt_cards = self.cards[:num_cards]
         self.cards = self.cards[num_cards:]
@@ -46,6 +46,7 @@ class Deck:
     def make_deck():
         cards = []
         suits = ["♠", "♥", "♣", "♦"]
+
         for suit in suits:
             for value in range(2, 15):
                 cards.append(Card(suit, value))
@@ -64,6 +65,29 @@ class Player:
     def play_card(self):
         return self.hand.pop() if self.hand else None
 
+
+def low_or_high():
+    deck = Deck(Deck.make_deck())
+    deck.shuffle()
+
+    guess = input("välj lågt [L] eller högt [H] : ")
+
+    card = deck.deal(1)[0]
+
+    print("du drog:", card)
+
+    if card.value <=7:
+        result = "lågt"
+
+    else:
+        result = "högt"
+
+    print("fortet är: ", result)
+
+    if guess == result:
+        print("Du vann")
+    else:
+        print("du förlorade")
 
 def play_game():
     deck = Deck(Deck.make_deck())
@@ -91,11 +115,28 @@ def play_game():
     else:
         print("\nOavgjort!")
 
-while True:
-    play_game()
 
-    again = input("\nVill du spela igen? (ja/nej): ").lower()
+game = input("vilket spel fill du spela "
+"[1] KORT MOT KORT"
+"[2] eller HÖGT ELLER LÅGT" \
+": ")
 
-    if again == "nej":
-        print("Spelet avslutas.")
-        break
+if game == 1:
+
+    while True:
+        play_game()
+
+        again = input("\nVill du spela igen? (ja/nej): ").lower()
+
+        if again == "nej":
+            print("Spelet avslutas.")
+            break
+else:
+    while True:
+        low_or_high()
+
+        again = input("\nVill du spela igen? (ja/nej): ").lower()
+
+        if again == "nej":
+            print("Spelet avslutas.")
+            break
