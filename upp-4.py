@@ -9,7 +9,7 @@ class Card:
     def __str__(self):
         names = {
             11: "J",
-            12: "D",
+            12: "Q",
             13: "K",
             14: "A"
         }
@@ -35,7 +35,7 @@ class Deck:
     def shuffle(self):
         cards = self.cards
 
-        for i in range(len(cards)-1,0,-1):
+        for i in range(len(cards)-1,):
             random_card = random.randint(0, i)
 
             temp_card = cards[i]
@@ -66,29 +66,6 @@ class Player:
         return self.hand.pop() if self.hand else None
 
 
-def low_or_high():
-    deck = Deck(Deck.make_deck())
-    deck.shuffle()
-
-    guess = input("välj lågt [L] eller högt [H] : ")
-
-    card = deck.deal(1)[0]
-
-    print("du drog:", card)
-
-    if card.value <=7:
-        result = "lågt"
-
-    else:
-        result = "högt"
-
-    print("fortet är: ", result)
-
-    if guess == result:
-        print("Du vann")
-    else:
-        print("du förlorade")
-
 def play_game():
     deck = Deck(Deck.make_deck())
     deck.shuffle()
@@ -116,27 +93,57 @@ def play_game():
         print("\nOavgjort!")
 
 
-game = input("vilket spel fill du spela\n"
-"\n[1] KORT MOT KORT"
-"\n[2] eller HÖGT ELLER LÅGT" \
-"\n: ")
+def low_or_high():
+    deck = Deck(Deck.make_deck())
+    deck.shuffle()
 
-if game == 1:
+    guess = input("\nVälj lågt [L] eller högt [H]: ").lower()
+
+    card = deck.deal(1)[0]
+
+    print("Du drog:", card)
+
+    if card.value <= 7:
+        result = "l"
+        print("Kortet är lågt")
+    else:
+        result = "h"
+        print("Kortet är högt")
+
+    if guess == result:
+        print("Du vann!")
+    else:
+        print("Du förlorade!")
+
+
+game = input(
+    "Vilket spel vill du spela?\n"
+    "\n[1] KORT MOT KORT"
+    "\n[2] HÖGT ELLER LÅGT"
+    "\n: "
+)
+
+if game == "1":
 
     while True:
         play_game()
 
-        again = input("\nVill du spela igen? (ja/nej): ").lower()
+        again = input("\nVill du spela igen? ja [Enter] nej [N]: ").lower()
 
-        if again == "nej":
+        if again == "n":
             print("Spelet avslutas.")
             break
-else:
+
+elif game == "2":
+
     while True:
         low_or_high()
 
-        again = input("\nVill du spela igen? (ja/nej): ").lower()
+        again = input("\nVill du spela igen? ja [Enter] nej [N]: ").lower()
 
-        if again == "nej":
+        if again == "n":
             print("Spelet avslutas.")
             break
+
+else:
+    print("Fel val")
